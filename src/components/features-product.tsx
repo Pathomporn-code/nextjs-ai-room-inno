@@ -24,7 +24,7 @@ const FeaturesProduct = ({ products }: Props) => {
                 width={0}
                 height={0}
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                src={`/product-image/${product.picture}`}
+                src={`/product-image/${product.images?.[0]?.imageName || 'placeholder.jpg'}`}
                 loading="eager"
               />
             </div>

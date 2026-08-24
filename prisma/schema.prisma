@@ -70,3 +70,68 @@ model Verification {
   @@index([identifier(length: 191)])
   @@map("verification")
 }
+
+model Category {
+  id       Int       @id @default(autoincrement())
+  name     String?   @db.VarChar(255)
+  products Product[]
+
+  @@map("categories")
+}
+
+model Product {
+  id          Int             @id @default(autoincrement())
+  name        String?         @db.VarChar(255)
+  description String?         @db.Text
+  price       Float?
+  categoryId  Int?            @map("category_id")
+  category    Category?       @relation(fields: [categoryId], references: [id])
+  images      ProductImage[]
+  orderItems  OrderItem[]
+
+  @@map("products")
+}
+
+model Customer {
+  id      Int     @id @default(autoincrement())
+  name    String? @db.VarChar(255)
+  address String? @db.VarChar(500)
+  phone   String? @db.VarChar(20)
+  orders  Order[]
+
+  @@map("customers")
+}
+
+model Order {
+  id          Int         @id @default(autoincrement())
+  date        DateTime?
+  customerId  Int?        @map("customer_id")
+  customer    Customer?   @relation(fields: [customerId], references: [id])
+  status      String?
+  totalAmount Float?      @map("total_amount")
+  items       OrderItem[]
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id        Int     @id @default(autoincrement())
+  orderId   Int     @map("order_id")
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId Int     @map("product_id")
+  product   Product @relation(fields: [productId], references: [id])
+  quantity  Int
+  price     Float
+
+  @@map("order_items")
+}
+
+model ProductImage {
+  id        Int      @id @default(autoincrement())
+  productId Int      @map("product_id")
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  imageName String   @db.Text @map("image_name")
+  createdAt DateTime @default(now())
+
+  @@map("product_images")
+}
