@@ -5,7 +5,6 @@
   "lsp": true,
   "permissions": {
     "bash":{
-      "*": "allow",
       "git add *" : "ask",
       "git commit -m *" : "ask",
       "git push" : "ask",
