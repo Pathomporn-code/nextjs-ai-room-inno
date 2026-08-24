@@ -3,7 +3,7 @@
   "autoupdate": true,
   "formatter": true,
   "lsp": true,
-  "permissions": {
+  "permission": {
     "bash":{
       "git add *" : "ask",
       "git commit -m *" : "ask",
