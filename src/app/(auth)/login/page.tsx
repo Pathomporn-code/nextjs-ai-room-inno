@@ -56,7 +56,9 @@ export default function LoginForm() {
               router.replace('/');
             },
             onError: (ctx) => {
-              alert(JSON.stringify(ctx.error));
+              const error = ctx.error;
+              const message = error?.message || 'เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง';
+              alert(message);
             }
          });
   }
@@ -119,12 +121,12 @@ export default function LoginForm() {
         </form>
       </CardContent>
       <CardFooter className="flex flex-col gap-3">
-        <Button type="submit" form="form-login" className="w-full">
-          เข้าสู่ระบบ
+        <Button type="submit" form="form-login" className="w-full" disabled={form.formState.isSubmitting}>
+          {form.formState.isSubmitting ? 'กำลังเข้าสู่ระบบ...' : 'เข้าสู่ระบบ'}
         </Button>
         <p className="text-center text-sm text-muted-foreground">
           ยังไม่มีบัญชี?{" "}
-          <a href="/register" className="underline underline-offset-4 hover:text-primary">
+          <a href="/signup" className="underline underline-offset-4 hover:text-primary">
             สมัครสมาชิก
           </a>
         </p>

@@ -72,7 +72,9 @@ export default function RegisterForm() {
           router.replace('/login');
         },
         onError: (ctx) => {
-          alert(JSON.stringify(ctx.error));
+          const error = ctx.error;
+          const message = error?.message || 'เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง';
+          alert(message);
         }
      });
   }
@@ -177,8 +179,8 @@ export default function RegisterForm() {
         </form>
       </CardContent>
       <CardFooter className="flex flex-col gap-3">
-        <Button type="submit" form="form-register" className="w-full">
-          สมัครสมาชิก
+        <Button type="submit" form="form-register" className="w-full" disabled={form.formState.isSubmitting}>
+          {form.formState.isSubmitting ? 'กำลังสมัครสมาชิก...' : 'สมัครสมาชิก'}
         </Button>
         <p className="text-center text-sm text-muted-foreground">
           มีบัญชีอยู่แล้ว?{" "}
