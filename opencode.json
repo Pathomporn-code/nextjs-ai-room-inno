@@ -1,0 +1,17 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "autoupdate": true,
+  "formatter": true,
+  "lsp": true,
+  "permissions": {
+    "bash":{
+      "*": "allow",
+      "git add *" : "ask",
+      "git commit -m *" : "ask",
+      "git push" : "ask",
+      "rm *" : "ask",
+      "rmdir *" : "ask",
+      "external_directory": "ask"
+    }
+  }
+}
