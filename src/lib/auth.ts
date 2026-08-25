@@ -1,19 +1,30 @@
 import { betterAuth } from "better-auth";
 import { createPool } from "mysql2/promise";
 
+const dbUrl = new URL(process.env.DATABASE_URL!);
+
 export const auth = betterAuth({
+    secret: process.env.BETTER_AUTH_SECRET!,
     database: createPool({
-        host: "localhost",
-        port: 3306,
-        user: "root",
-        password: "Admin_1jj395qu",
-        database: "ecommerce",
+        host: dbUrl.hostname,
+        port: Number(dbUrl.port) || 3306,
+        user: dbUrl.username,
+        password: dbUrl.password,
+        database: dbUrl.pathname.slice(1),
     }),
     user: {
         fields: {
             emailVerified: "emailVerified",
             createdAt: "createdAt",
             updatedAt: "updatedAt",
+        },
+        additionalFields: {
+            role: {
+                type: "string",
+                required: false,
+                defaultValue: "user",
+                input: false,
+            },
         },
     },
     session: {

@@ -1,16 +1,28 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "plugin": ["@dietrichgebert/ponytail"] ,
+  "plugin": ["@dietrichgebert/ponytail"],
   "autoupdate": true,
   "formatter": true,
   "lsp": true,
+  "agent": {
+    "plan": {
+      "permission": {
+        "edit": {
+          "src/**": "allow",
+          "prisma/**": "allow",
+          ".opencode/plans/**": "allow",
+          "*": "deny"
+        }
+      }
+    }
+  },
   "permission": {
-    "bash":{
-      "git add *" : "ask",
-      "git commit -m *" : "ask",
-      "git push" : "ask",
-      "rm *" : "ask",
-      "rmdir *" : "ask",
+    "bash": {
+      "git add *": "ask",
+      "git commit -m *": "ask",
+      "git push": "ask",
+      "rm *": "ask",
+      "rmdir *": "ask",
       "external_directory": "ask"
     }
   }
