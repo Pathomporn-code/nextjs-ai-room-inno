@@ -10,7 +10,7 @@ async function ApiVersion() {
   const response = await fetch('https://api.codingthailand.com/api/version');
   const apiInfo = await response.json();
 
-  return <p>API Version: {apiInfo.data.version}</p>;
+  return <p>API เวอร์ชั่น: {apiInfo.data.version}</p>;
 }
 
 // http://localhost:3000/about
