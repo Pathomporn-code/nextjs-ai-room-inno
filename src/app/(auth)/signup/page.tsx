@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { authClient } from "@/lib/auth-client"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
 
 const registerSchema = z
@@ -62,21 +63,23 @@ export default function RegisterForm() {
   })
 
   async function onSubmit(data: RegisterFormValues) {
-     await authClient.signUp.email({
-      name: data.name,
-      email: data.email,
-      password: data.password,
-     }, {
+    try {
+      await authClient.signUp.email({
+        name: data.name,
+        email: data.email,
+        password: data.password,
+      }, {
         onSuccess: () => {
-          alert('สมัครสมาชิกสำเร็จ');
           router.replace('/login');
         },
         onError: (ctx) => {
-          const error = ctx.error;
-          const message = error?.message || 'เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง';
+          const message = ctx.error?.message || 'เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง';
           alert(message);
         }
-     });
+      });
+    } catch {
+      alert('เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง');
+    }
   }
 
   return (
@@ -184,12 +187,12 @@ export default function RegisterForm() {
         </Button>
         <p className="text-center text-sm text-muted-foreground">
           มีบัญชีอยู่แล้ว?{" "}
-          <a
+          <Link
             href="/login"
             className="underline underline-offset-4 hover:text-primary"
           >
             เข้าสู่ระบบ
-          </a>
+          </Link>
         </p>
       </CardFooter>
     </Card>

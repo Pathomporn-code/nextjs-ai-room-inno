@@ -41,6 +41,7 @@ model Session {
 
 model Account {
   id                    String    @id
+  issuer                String    @db.VarChar(255)
   accountId             String    @db.Text
   providerId            String    @db.Text
   userId                String

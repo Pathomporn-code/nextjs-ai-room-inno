@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { authClient } from "@/lib/auth-client"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
 
 const loginSchema = z.object({
@@ -47,20 +48,22 @@ export default function LoginForm() {
   })
 
   async function onSubmit(data: LoginFormValues) {
-        await authClient.signIn.email({
-          email: data.email,
-          password: data.password,
-         }, {
-            onSuccess: () => {
-              alert('เข้าระบบสำเร็จ');
-              router.replace('/');
-            },
-            onError: (ctx) => {
-              const error = ctx.error;
-              const message = error?.message || 'เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง';
-              alert(message);
-            }
-         });
+    try {
+      await authClient.signIn.email({
+        email: data.email,
+        password: data.password,
+      }, {
+        onSuccess: () => {
+          router.replace('/');
+        },
+        onError: (ctx) => {
+          const message = ctx.error?.message || 'เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง';
+          alert(message);
+        }
+      });
+    } catch {
+      alert('เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง');
+    }
   }
 
   return (
@@ -126,9 +129,9 @@ export default function LoginForm() {
         </Button>
         <p className="text-center text-sm text-muted-foreground">
           ยังไม่มีบัญชี?{" "}
-          <a href="/signup" className="underline underline-offset-4 hover:text-primary">
+          <Link href="/signup" className="underline underline-offset-4 hover:text-primary">
             สมัครสมาชิก
-          </a>
+          </Link>
         </p>
       </CardFooter>
     </Card>
