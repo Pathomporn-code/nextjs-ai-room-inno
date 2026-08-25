@@ -10,8 +10,6 @@ import {
 } from "lucide-react";
 import ContactForm from "./contact-form";
 
-export const revalidate = 3600;
-
 const contactInfo = [
   {
     icon: MapPin,

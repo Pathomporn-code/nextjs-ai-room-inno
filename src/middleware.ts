@@ -3,8 +3,9 @@ import { NextRequest, NextResponse } from "next/server";
 const apiHits = new Map<string, { count: number; resetAt: number }>();
 const WINDOW_MS = 60_000;
 const MAX_REQUESTS = 30;
+const CONTACT_MAX_REQUESTS = 5;
 
-function rateLimit(ip: string): boolean {
+function rateLimit(ip: string, maxRequests = MAX_REQUESTS): boolean {
   const now = Date.now();
   const entry = apiHits.get(ip);
 
@@ -14,7 +15,7 @@ function rateLimit(ip: string): boolean {
   }
 
   entry.count++;
-  return entry.count > MAX_REQUESTS;
+  return entry.count > maxRequests;
 }
 
 export function middleware(request: NextRequest) {
@@ -23,10 +24,18 @@ export function middleware(request: NextRequest) {
   const hasSession = /better-auth\.session_token=/.test(cookieHeader);
 
   const isApiRoute = pathname.startsWith("/api/admin");
+  const isContactApi = pathname === "/api/contact";
 
   if (isApiRoute) {
     const ip = request.headers.get("x-forwarded-for")?.split(",")[0] ?? "unknown";
     if (rateLimit(ip)) {
+      return NextResponse.json({ error: "Too Many Requests" }, { status: 429 });
+    }
+  }
+
+  if (isContactApi) {
+    const ip = request.headers.get("x-forwarded-for")?.split(",")[0] ?? "unknown";
+    if (rateLimit(ip, CONTACT_MAX_REQUESTS)) {
       return NextResponse.json({ error: "Too Many Requests" }, { status: 429 });
     }
   }
@@ -42,5 +51,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/admin/:path*", "/api/admin/:path*"],
+  matcher: ["/admin/:path*", "/api/admin/:path*", "/api/contact"],
 };
