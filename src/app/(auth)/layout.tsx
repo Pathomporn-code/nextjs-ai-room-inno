@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 
-export const instant = false;
 
 export const metadata: Metadata = {
   title: "ระบบ ล็อกอิน",
