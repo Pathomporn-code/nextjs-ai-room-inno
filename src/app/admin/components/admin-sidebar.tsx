@@ -8,11 +8,13 @@ import {
   RiShoppingCartLine,
   RiUserLine,
   RiLogoutBoxLine,
+  RiBox3Line,
 } from "@remixicon/react";
 import { authClient } from "@/lib/auth-client";
 
 const NAV_ITEMS = [
   { href: "/admin/dashboard", label: "Dashboard", icon: RiDashboardLine },
+  { href: "/admin/products", label: "Products", icon: RiBox3Line },
   { href: "/admin/orders", label: "Orders", icon: RiShoppingCartLine },
   { href: "/admin/customers", label: "Customers", icon: RiUserLine },
 ];
