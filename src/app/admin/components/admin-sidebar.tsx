@@ -7,7 +7,7 @@ import {
   RiDashboardLine,
   RiShoppingCartLine,
   RiUserLine,
-  RiLogoutBoxLine,
+  RiHome4Line,
   RiBox3Line,
 } from "@remixicon/react";
 import { authClient } from "@/lib/auth-client";
@@ -54,15 +54,11 @@ export function AdminSidebar() {
 
       <div className="border-t p-2">
         <button
-          onClick={() =>
-            authClient.signOut({
-              fetchOptions: { onSuccess: () => { router.push("/login"); } },
-            })
-          }
+          onClick={() => { router.push("/"); }}
           className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
         >
-          <RiLogoutBoxLine className="size-4" />
-          ออกจากระบบ
+          <RiHome4Line className="size-4" />
+          กลับสู่หน้าหลัก
         </button>
       </div>
     </aside>
