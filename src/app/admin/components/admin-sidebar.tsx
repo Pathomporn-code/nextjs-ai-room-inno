@@ -10,7 +10,6 @@ import {
   RiHome4Line,
   RiBox3Line,
 } from "@remixicon/react";
-import { authClient } from "@/lib/auth-client";
 
 const NAV_ITEMS = [
   { href: "/admin/dashboard", label: "Dashboard", icon: RiDashboardLine },
